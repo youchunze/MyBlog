@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ycz.myblog.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="cn.ycz.myblog.po.User" >
+    <id column="Uid" property="uid" jdbcType="BIGINT" />
+    <result column="Ualais" property="ualais" jdbcType="VARCHAR" />
+    <result column="Uimage" property="uimage" jdbcType="VARCHAR" />
+    <result column="Ulogon" property="ulogon" jdbcType="VARCHAR" />
+    <result column="Upassswd" property="upassswd" jdbcType="VARCHAR" />
+    <result column="Usex" property="usex" jdbcType="CHAR" />
+    <result column="Uname" property="uname" jdbcType="VARCHAR" />
+    <result column="Uskin" property="uskin" jdbcType="CHAR" />
+    <result column="Uqq" property="uqq" jdbcType="VARCHAR" />
+    <result column="Uschool" property="uschool" jdbcType="CHAR" />
+    <result column="Uwork" property="uwork" jdbcType="VARCHAR" />
+    <result column="Utel" property="utel" jdbcType="CHAR" />
+    <result column="Uinfo" property="uinfo" jdbcType="VARCHAR" />
+    <result column="Udatetime" property="udatetime" jdbcType="TIMESTAMP" />
+    <result column="Ublog" property="ublog" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Uid, Ualais, Uimage, Ulogon, Upassswd, Usex, Uname, Uskin, Uqq, Uschool, Uwork, Utel, 
+    Uinfo, Udatetime, Ublog
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.ycz.myblog.po.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where Uid = #{uid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user
+    where Uid = #{uid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.ycz.myblog.po.UserExample" >
+    delete from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.ycz.myblog.po.User" >
+    insert into user (Uid, Ualais, Uimage, 
+      Ulogon, Upassswd, Usex, 
+      Uname, Uskin, Uqq, Uschool, 
+      Uwork, Utel, Uinfo, Udatetime, 
+      Ublog)
+    values (#{uid,jdbcType=BIGINT}, #{ualais,jdbcType=VARCHAR}, #{uimage,jdbcType=VARCHAR}, 
+      #{ulogon,jdbcType=VARCHAR}, #{upassswd,jdbcType=VARCHAR}, #{usex,jdbcType=CHAR}, 
+      #{uname,jdbcType=VARCHAR}, #{uskin,jdbcType=CHAR}, #{uqq,jdbcType=VARCHAR}, #{uschool,jdbcType=CHAR}, 
+      #{uwork,jdbcType=VARCHAR}, #{utel,jdbcType=CHAR}, #{uinfo,jdbcType=VARCHAR}, #{udatetime,jdbcType=TIMESTAMP}, 
+      #{ublog,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.ycz.myblog.po.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        Uid,
+      </if>
+      <if test="ualais != null" >
+        Ualais,
+      </if>
+      <if test="uimage != null" >
+        Uimage,
+      </if>
+      <if test="ulogon != null" >
+        Ulogon,
+      </if>
+      <if test="upassswd != null" >
+        Upassswd,
+      </if>
+      <if test="usex != null" >
+        Usex,
+      </if>
+      <if test="uname != null" >
+        Uname,
+      </if>
+      <if test="uskin != null" >
+        Uskin,
+      </if>
+      <if test="uqq != null" >
+        Uqq,
+      </if>
+      <if test="uschool != null" >
+        Uschool,
+      </if>
+      <if test="uwork != null" >
+        Uwork,
+      </if>
+      <if test="utel != null" >
+        Utel,
+      </if>
+      <if test="uinfo != null" >
+        Uinfo,
+      </if>
+      <if test="udatetime != null" >
+        Udatetime,
+      </if>
+      <if test="ublog != null" >
+        Ublog,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="ualais != null" >
+        #{ualais,jdbcType=VARCHAR},
+      </if>
+      <if test="uimage != null" >
+        #{uimage,jdbcType=VARCHAR},
+      </if>
+      <if test="ulogon != null" >
+        #{ulogon,jdbcType=VARCHAR},
+      </if>
+      <if test="upassswd != null" >
+        #{upassswd,jdbcType=VARCHAR},
+      </if>
+      <if test="usex != null" >
+        #{usex,jdbcType=CHAR},
+      </if>
+      <if test="uname != null" >
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="uskin != null" >
+        #{uskin,jdbcType=CHAR},
+      </if>
+      <if test="uqq != null" >
+        #{uqq,jdbcType=VARCHAR},
+      </if>
+      <if test="uschool != null" >
+        #{uschool,jdbcType=CHAR},
+      </if>
+      <if test="uwork != null" >
+        #{uwork,jdbcType=VARCHAR},
+      </if>
+      <if test="utel != null" >
+        #{utel,jdbcType=CHAR},
+      </if>
+      <if test="uinfo != null" >
+        #{uinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="udatetime != null" >
+        #{udatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ublog != null" >
+        #{ublog,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.ycz.myblog.po.UserExample" resultType="java.lang.Integer" >
+    select count(*) from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user
+    <set >
+      <if test="record.uid != null" >
+        Uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.ualais != null" >
+        Ualais = #{record.ualais,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uimage != null" >
+        Uimage = #{record.uimage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ulogon != null" >
+        Ulogon = #{record.ulogon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upassswd != null" >
+        Upassswd = #{record.upassswd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usex != null" >
+        Usex = #{record.usex,jdbcType=CHAR},
+      </if>
+      <if test="record.uname != null" >
+        Uname = #{record.uname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uskin != null" >
+        Uskin = #{record.uskin,jdbcType=CHAR},
+      </if>
+      <if test="record.uqq != null" >
+        Uqq = #{record.uqq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uschool != null" >
+        Uschool = #{record.uschool,jdbcType=CHAR},
+      </if>
+      <if test="record.uwork != null" >
+        Uwork = #{record.uwork,jdbcType=VARCHAR},
+      </if>
+      <if test="record.utel != null" >
+        Utel = #{record.utel,jdbcType=CHAR},
+      </if>
+      <if test="record.uinfo != null" >
+        Uinfo = #{record.uinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.udatetime != null" >
+        Udatetime = #{record.udatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ublog != null" >
+        Ublog = #{record.ublog,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user
+    set Uid = #{record.uid,jdbcType=BIGINT},
+      Ualais = #{record.ualais,jdbcType=VARCHAR},
+      Uimage = #{record.uimage,jdbcType=VARCHAR},
+      Ulogon = #{record.ulogon,jdbcType=VARCHAR},
+      Upassswd = #{record.upassswd,jdbcType=VARCHAR},
+      Usex = #{record.usex,jdbcType=CHAR},
+      Uname = #{record.uname,jdbcType=VARCHAR},
+      Uskin = #{record.uskin,jdbcType=CHAR},
+      Uqq = #{record.uqq,jdbcType=VARCHAR},
+      Uschool = #{record.uschool,jdbcType=CHAR},
+      Uwork = #{record.uwork,jdbcType=VARCHAR},
+      Utel = #{record.utel,jdbcType=CHAR},
+      Uinfo = #{record.uinfo,jdbcType=VARCHAR},
+      Udatetime = #{record.udatetime,jdbcType=TIMESTAMP},
+      Ublog = #{record.ublog,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.ycz.myblog.po.User" >
+    update user
+    <set >
+      <if test="ualais != null" >
+        Ualais = #{ualais,jdbcType=VARCHAR},
+      </if>
+      <if test="uimage != null" >
+        Uimage = #{uimage,jdbcType=VARCHAR},
+      </if>
+      <if test="ulogon != null" >
+        Ulogon = #{ulogon,jdbcType=VARCHAR},
+      </if>
+      <if test="upassswd != null" >
+        Upassswd = #{upassswd,jdbcType=VARCHAR},
+      </if>
+      <if test="usex != null" >
+        Usex = #{usex,jdbcType=CHAR},
+      </if>
+      <if test="uname != null" >
+        Uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="uskin != null" >
+        Uskin = #{uskin,jdbcType=CHAR},
+      </if>
+      <if test="uqq != null" >
+        Uqq = #{uqq,jdbcType=VARCHAR},
+      </if>
+      <if test="uschool != null" >
+        Uschool = #{uschool,jdbcType=CHAR},
+      </if>
+      <if test="uwork != null" >
+        Uwork = #{uwork,jdbcType=VARCHAR},
+      </if>
+      <if test="utel != null" >
+        Utel = #{utel,jdbcType=CHAR},
+      </if>
+      <if test="uinfo != null" >
+        Uinfo = #{uinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="udatetime != null" >
+        Udatetime = #{udatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ublog != null" >
+        Ublog = #{ublog,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Uid = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.ycz.myblog.po.User" >
+    update user
+    set Ualais = #{ualais,jdbcType=VARCHAR},
+      Uimage = #{uimage,jdbcType=VARCHAR},
+      Ulogon = #{ulogon,jdbcType=VARCHAR},
+      Upassswd = #{upassswd,jdbcType=VARCHAR},
+      Usex = #{usex,jdbcType=CHAR},
+      Uname = #{uname,jdbcType=VARCHAR},
+      Uskin = #{uskin,jdbcType=CHAR},
+      Uqq = #{uqq,jdbcType=VARCHAR},
+      Uschool = #{uschool,jdbcType=CHAR},
+      Uwork = #{uwork,jdbcType=VARCHAR},
+      Utel = #{utel,jdbcType=CHAR},
+      Uinfo = #{uinfo,jdbcType=VARCHAR},
+      Udatetime = #{udatetime,jdbcType=TIMESTAMP},
+      Ublog = #{ublog,jdbcType=VARCHAR}
+    where Uid = #{uid,jdbcType=BIGINT}
+  </update>
+</mapper>

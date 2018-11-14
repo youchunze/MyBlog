@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-ch" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<link rel="stylesheet" th:href="@{/static/css/login.css}">-->
+    <link th:href="@{/static/asserts/bootstrap-3.3.7-dist/css/bootstrap.css}"  rel="stylesheet" type="text/css">
+    <link rel="icon" href="https://getbootstrap.com/favicon.ico">
+    <link rel="stylesheet" th:href="@{/static/asserts/css/login.css}">
+    <link rel="stylesheet" th:href="@{static/asserts/css/list.css}">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://cdn.bootcss.com/mustache.js/3.0.0/mustache.js"></script>
+</head>
+<div class="container-fluid">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div th:replace="home/common/bar::topbar"></div>
+        </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-3 column">
+            <div class="btn-group">
+                <button class="btn btn-default">Action</button> <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#">操作</a>
+                    </li>
+                    <li class="disabled">
+                        <a href="#">另一操作</a>
+                    </li>
+                    <li class="divider">
+                    </li>
+                    <li>
+                        <a href="#">其它</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-6 column">
+            <div class="" style="margin-left: 10px">
+                <button class="btn btn-primary" id="sendBtn" >发送</button>
+                <button class="btn btn-default a" id="bt1" style="display: none">文字</button>
+                <button class="btn btn-default a" id="bt2" style="display: none">图片</button>
+                <button class="btn btn-default a" id="bt4" style="display: none">链接</button>
+                <button class="btn btn-default a" id="bt5" style="display: none">位置</button>
+            </div>
+            <br>
+            <div id="post_all">
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+<script type="text/template" id="demo">
+    <div class="row clearfix post_wrapper" >
+        <div class="avatar col-md-1" >
+            <img src="/static/asserts/123.jpg" alt="img" height="50" width="50">
+        </div>
+        <div class="col-md-offset-2 clearfix post_media">
+            <div class="ualais ">
+                <a href="#">{{ualais}}</a>
+            </div>
+            <div class="message" >
+                {{mcontent}}
+                <img class="img-responsive" src="/static/asserts/123.jpg" alt="img" >
+                <img class="img-responsive" src="/static/asserts/123.jpg" alt="img" >
+                <img class="img-responsive" src="/static/asserts/123.jpg" alt="img" >
+
+            </div>
+            <div>#{{tid}}</div>
+            <div class="interactive" >
+                <p class="text-center" style="display: inline;margin-left: 5%;">热度{{mreply}}</p>
+                <div  style="display: inline;background-color: red;position: absolute;right: 15%;">
+                    <a href="#">点赞</a>
+                    <a href="#">评论</a>
+                    <a href="#">转发</a>
+                </div>
+            </div>
+            <div>{{mdatetime}}</div>
+        </div>
+    </div>
+</script>
+
+<script>
+    $(function(){
+        $.ajax({
+            url: "/message/find/1",//查找当前用户的所有博客，传入用户id值？
+            type: "get",
+            dataType: "json",
+            error: function(data){
+                alert("error");
+            },
+            success: function(data){
+                alert("success");
+                console.log(data[0].cid);
+                if (data.length > 0) {
+                    $.each(data,function (i,item) {
+                        $("<div></div>").appendTo('#post_all').addClass("Mid_"+item.mid)
+                            .append(Mustache.render($("#demo").html(),item));
+                    })
+                }
+                else{
+                    $("<div></div>").appendTo('#post_all').append("没内容");
+                }
+            }
+        })
+    })
+</script>
+<script>
+    var $btn = $(".a");
+    var $sendBtn = $("#sendBtn");
+    var flag = false;
+    var btnAry = new Array();
+    btnAry[0]=$("#bt1");
+    btnAry[1]=$("#bt2");
+    btnAry[2]=$("#bt3");
+    btnAry[3]=$("#bt4");
+    btnAry[4]=$("#bt5");
+
+    $("#sendBtn").click(function(){
+        if (!flag) {
+            $sendBtn.hide();
+            console.log("鼠标进入")
+            $.each(btnAry,function(i,val){
+                setTimeout(function(){
+                    val.show();
+                },i*100+50);
+
+            });
+            $sendBtn.text('关闭');
+            $sendBtn.show();
+            flag = true;
+        }else{
+            console.log("鼠标离开")
+            $btn.stop().hide();
+            $sendBtn.text('发送');
+            flag = false;
+        }
+
+
+    })
+
+</script>
+</body>
+</html>

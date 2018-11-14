@@ -1,0 +1,26 @@
+.post_wrapper{
+    margin-top: 20px;
+}
+.post_media{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+/*头像*/
+.avatar{
+    margin-top: 20px;
+    /*margin-left: 50px;*/
+    width: 50px;
+}
+.ualais{
+    background-color: #DDDDDD;
+    text-indent: 10px;
+}
+/*图片自适应*/
+.img-responsive {
+    display: block;
+    height: auto;
+    max-width: 96%;
+    margin-top: 5px;
+}
+.message{
+    margin-left: 20px
+}

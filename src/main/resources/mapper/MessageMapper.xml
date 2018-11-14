@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ycz.myblog.mapper.MessageMapper" >
+  <resultMap id="BaseResultMap" type="cn.ycz.myblog.po.Message" >
+    <id column="Mid" property="mid" jdbcType="BIGINT" />
+    <result column="Uid" property="uid" jdbcType="BIGINT" />
+    <result column="Tid" property="tid" jdbcType="CHAR" />
+    <result column="Cid" property="cid" jdbcType="CHAR" />
+    <result column="Mcontent" property="mcontent" jdbcType="VARCHAR" />
+    <result column="Mhttp" property="mhttp" jdbcType="VARCHAR" />
+    <result column="Mfav" property="mfav" jdbcType="INTEGER" />
+    <result column="Mreply" property="mreply" jdbcType="INTEGER" />
+    <result column="Mcopy" property="mcopy" jdbcType="INTEGER" />
+    <result column="Mdatetime" property="mdatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Mid, Uid, Tid, Cid, Mcontent, Mhttp, Mfav, Mreply, Mcopy, Mdatetime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.ycz.myblog.po.MessageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from message
+    where Mid = #{mid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from message
+    where Mid = #{mid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.ycz.myblog.po.MessageExample" >
+    delete from message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.ycz.myblog.po.Message" >
+    insert into message (Mid, Uid, Tid, Cid, 
+      Mcontent, Mhttp, Mfav, 
+      Mreply, Mcopy, Mdatetime
+      )
+    values (#{mid,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{tid,jdbcType=CHAR}, #{cid,jdbcType=CHAR}, 
+      #{mcontent,jdbcType=VARCHAR}, #{mhttp,jdbcType=VARCHAR}, #{mfav,jdbcType=INTEGER}, 
+      #{mreply,jdbcType=INTEGER}, #{mcopy,jdbcType=INTEGER}, #{mdatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.ycz.myblog.po.Message" >
+    insert into message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mid != null" >
+        Mid,
+      </if>
+      <if test="uid != null" >
+        Uid,
+      </if>
+      <if test="tid != null" >
+        Tid,
+      </if>
+      <if test="cid != null" >
+        Cid,
+      </if>
+      <if test="mcontent != null" >
+        Mcontent,
+      </if>
+      <if test="mhttp != null" >
+        Mhttp,
+      </if>
+      <if test="mfav != null" >
+        Mfav,
+      </if>
+      <if test="mreply != null" >
+        Mreply,
+      </if>
+      <if test="mcopy != null" >
+        Mcopy,
+      </if>
+      <if test="mdatetime != null" >
+        Mdatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mid != null" >
+        #{mid,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="tid != null" >
+        #{tid,jdbcType=CHAR},
+      </if>
+      <if test="cid != null" >
+        #{cid,jdbcType=CHAR},
+      </if>
+      <if test="mcontent != null" >
+        #{mcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="mhttp != null" >
+        #{mhttp,jdbcType=VARCHAR},
+      </if>
+      <if test="mfav != null" >
+        #{mfav,jdbcType=INTEGER},
+      </if>
+      <if test="mreply != null" >
+        #{mreply,jdbcType=INTEGER},
+      </if>
+      <if test="mcopy != null" >
+        #{mcopy,jdbcType=INTEGER},
+      </if>
+      <if test="mdatetime != null" >
+        #{mdatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.ycz.myblog.po.MessageExample" resultType="java.lang.Integer" >
+    select count(*) from message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update message
+    <set >
+      <if test="record.mid != null" >
+        Mid = #{record.mid,jdbcType=BIGINT},
+      </if>
+      <if test="record.uid != null" >
+        Uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.tid != null" >
+        Tid = #{record.tid,jdbcType=CHAR},
+      </if>
+      <if test="record.cid != null" >
+        Cid = #{record.cid,jdbcType=CHAR},
+      </if>
+      <if test="record.mcontent != null" >
+        Mcontent = #{record.mcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mhttp != null" >
+        Mhttp = #{record.mhttp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mfav != null" >
+        Mfav = #{record.mfav,jdbcType=INTEGER},
+      </if>
+      <if test="record.mreply != null" >
+        Mreply = #{record.mreply,jdbcType=INTEGER},
+      </if>
+      <if test="record.mcopy != null" >
+        Mcopy = #{record.mcopy,jdbcType=INTEGER},
+      </if>
+      <if test="record.mdatetime != null" >
+        Mdatetime = #{record.mdatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update message
+    set Mid = #{record.mid,jdbcType=BIGINT},
+      Uid = #{record.uid,jdbcType=BIGINT},
+      Tid = #{record.tid,jdbcType=CHAR},
+      Cid = #{record.cid,jdbcType=CHAR},
+      Mcontent = #{record.mcontent,jdbcType=VARCHAR},
+      Mhttp = #{record.mhttp,jdbcType=VARCHAR},
+      Mfav = #{record.mfav,jdbcType=INTEGER},
+      Mreply = #{record.mreply,jdbcType=INTEGER},
+      Mcopy = #{record.mcopy,jdbcType=INTEGER},
+      Mdatetime = #{record.mdatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.ycz.myblog.po.Message" >
+    update message
+    <set >
+      <if test="uid != null" >
+        Uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="tid != null" >
+        Tid = #{tid,jdbcType=CHAR},
+      </if>
+      <if test="cid != null" >
+        Cid = #{cid,jdbcType=CHAR},
+      </if>
+      <if test="mcontent != null" >
+        Mcontent = #{mcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="mhttp != null" >
+        Mhttp = #{mhttp,jdbcType=VARCHAR},
+      </if>
+      <if test="mfav != null" >
+        Mfav = #{mfav,jdbcType=INTEGER},
+      </if>
+      <if test="mreply != null" >
+        Mreply = #{mreply,jdbcType=INTEGER},
+      </if>
+      <if test="mcopy != null" >
+        Mcopy = #{mcopy,jdbcType=INTEGER},
+      </if>
+      <if test="mdatetime != null" >
+        Mdatetime = #{mdatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where Mid = #{mid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.ycz.myblog.po.Message" >
+    update message
+    set Uid = #{uid,jdbcType=BIGINT},
+      Tid = #{tid,jdbcType=CHAR},
+      Cid = #{cid,jdbcType=CHAR},
+      Mcontent = #{mcontent,jdbcType=VARCHAR},
+      Mhttp = #{mhttp,jdbcType=VARCHAR},
+      Mfav = #{mfav,jdbcType=INTEGER},
+      Mreply = #{mreply,jdbcType=INTEGER},
+      Mcopy = #{mcopy,jdbcType=INTEGER},
+      Mdatetime = #{mdatetime,jdbcType=TIMESTAMP}
+    where Mid = #{mid,jdbcType=BIGINT}
+  </update>
+</mapper>
