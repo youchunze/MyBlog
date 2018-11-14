@@ -5,7 +5,7 @@ import java.util.Date;
 public class User {
     //用户编号
     private Long uid;
-    //用户妮称
+    //用户昵称
     private String ualais;
     //用户头像
     private String uimage;

@@ -45,10 +45,21 @@ public class MessageServiceImpl implements MessageService {
             content.setMdatetime(message.getMdatetime());
             content.setMcontent(message.getMcontent());
             User user =  userMapper.selectByPrimaryKey(message.getUid());
+            content.setUid(user.getUid());
             content.setUalais(user.getUalais());
             content.setUimage(user.getUimage());
             result.add(content);
         }
         return result;
+    }
+
+    @Override
+    public Result deleteMsg(Long mid) {
+        try {
+            messageMapper.deleteByPrimaryKey(mid);
+            return Result.ok("删除成功");
+        }catch (Exception e){
+            return Result.build(500,"删除出错，请重试");
+        }
     }
 }

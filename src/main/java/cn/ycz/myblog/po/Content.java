@@ -21,6 +21,17 @@ public class Content{
     private Integer mcopy;
     //发表时间
     private Date mdatetime;
+    //用户编号
+
+    public Long getUid() {
+        return uid;
+    }
+
+    public void setUid(Long uid) {
+        this.uid = uid;
+    }
+
+    private Long uid;
     //用户妮称
     private String ualais;
     //用户头像

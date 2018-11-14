@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <!--<link rel="stylesheet" th:href="@{/static/css/login.css}">-->
-    <link th:href="@{/static/asserts/bootstrap-3.3.7-dist/css/bootstrap.css}"  rel="stylesheet" type="text/css">
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://cdn.bootcss.com/mustache.js/3.0.0/mustache.js"></script>
+    <!--<link th:href="@{/static/asserts/bootstrap-3.3.7-dist/css/bootstrap.css}"  rel="stylesheet" type="text/css">-->
     <link rel="icon" href="https://getbootstrap.com/favicon.ico">
     <link rel="stylesheet" th:href="@{/static/asserts/css/login.css}">
     <link rel="stylesheet" th:href="@{static/asserts/css/list.css}">
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="https://cdn.bootcss.com/mustache.js/3.0.0/mustache.js"></script>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 </head>
-<div class="container-fluid">
+<div class="container-fluid skin">
     <div class="row clearfix">
         <div class="col-md-12 column">
             <div th:replace="home/common/bar::topbar"></div>
@@ -36,40 +39,60 @@
                 </ul>
             </div>
         </div>
-
-        <div class="col-md-6 column">
-            <div class="" style="margin-left: 10px">
-                <button class="btn btn-primary" id="sendBtn" >发送</button>
-                <button class="btn btn-default a" id="bt1" style="display: none">文字</button>
-                <button class="btn btn-default a" id="bt2" style="display: none">图片</button>
-                <button class="btn btn-default a" id="bt4" style="display: none">链接</button>
-                <button class="btn btn-default a" id="bt5" style="display: none">位置</button>
-            </div>
+        <div class="col-md-6 column uimage">
+            <!-- 资料界面头像 -->
+            <img class="center-block" src="/static/asserts/21.jpg" alt="img" height="140" width="140" style="border:5px solid #DDDD">
+            <span class="text-center center-block" style="font-size: 20px"><strong>hello</strong>  word</span>
+            <!--按钮-->
+            <!--<div class="" style="margin-left: 10px">-->
+                <!--<button class="btn btn-primary btn-lg" id="sendBtn" >发送</button>-->
+                <!--<button class="btn btn-default btn-lg a" data-toggle="modal" data-target="#myModal" id="bt1" style="display: none">文字</button>-->
+                <!--<button class="btn btn-default btn-lg a" id="bt2" style="display: none">图片</button>-->
+                <!--<button class="btn btn-default btn-lg a" id="bt4" style="display: none">链接</button>-->
+                <!--<button class="btn btn-default btn-lg a" id="bt5" style="display: none">位置</button>-->
+            <!--</div>-->
             <br>
             <div id="post_all">
-
             </div>
         </div>
-
     </div>
-
 </div>
-
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">帖子内容</h4>
+            </div>
+            <div class="modal-body">
+                <textarea name="" id="mcontent"  rows="10" style="width: 100%"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" id="sendWord" class="btn btn-primary">发送</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
 </div>
 <script type="text/template" id="demo">
     <div class="row clearfix post_wrapper" >
+        <!--直接传入-->
+        <!--<div id="mid" style="display: none;">{{mid}}</div>-->
         <div class="avatar col-md-1" >
-            <img src="/static/asserts/123.jpg" alt="img" height="50" width="50">
+            <img src="/static/asserts/21.jpg" alt="img" height="70" width="70">
         </div>
         <div class="col-md-offset-2 clearfix post_media">
             <div class="ualais ">
                 <a href="#">{{ualais}}</a>
+                <!--确实确认框！ 删除使用js去掉模块会不会体验更好-->
+                <button type="button" class="close" onclick="del({{mid}})" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="message" >
                 {{mcontent}}
-                <img class="img-responsive" src="/static/asserts/123.jpg" alt="img" >
-                <img class="img-responsive" src="/static/asserts/123.jpg" alt="img" >
-                <img class="img-responsive" src="/static/asserts/123.jpg" alt="img" >
+                <!--<img class="img-responsive" src="/static/asserts/111.jpg" alt="img" >-->
+                <!--<img class="img-responsive" src="/static/asserts/21.jpg" alt="img" >-->
+                <!--<img class="img-responsive" src="/static/asserts/21.jpg" alt="img" >-->
 
             </div>
             <div>#{{tid}}</div>
@@ -87,9 +110,54 @@
 </script>
 
 <script>
-    $(function(){
+    function del(mid) {
+        alert(mid);
         $.ajax({
-            url: "/message/find/1",//查找当前用户的所有博客，传入用户id值？
+            url: "/message/delete/"+mid,
+            type: "delete",
+            dataType: "json",
+            error: function(data){
+                alert("失败请重试");
+            },
+            success: function(data){
+                alert("删除成功");
+                window.location.reload();
+            }
+        })
+    }
+</script>
+<script>
+    $("#sendWord").click(function () {
+        var message = {
+            uid: $("#myUid").text(),
+            tid: "",
+            cid: "",
+            mcontent: $("#mcontent").val(),
+            mhttp: ""
+
+        }
+        $.ajax({
+            url: "/message/create",
+            type: "post",
+            dataType: "json",
+            data: message,
+            error: function(data){
+                alert("error");
+            },
+            success: function(data){
+                alert("success");
+                location.replace(location.href);
+//                location.replace("http://localhost:8080/list");
+            }
+        })
+    })
+</script>
+<script>
+    $(function(){
+//        $('#myModal').modal('show');
+        var uid = $("#myUid").text();
+        $.ajax({
+            url: "/message/find/"+uid,//查找当前用户的所有博客，传入用户id值？
             type: "get",
             dataType: "json",
             error: function(data){
@@ -97,7 +165,6 @@
             },
             success: function(data){
                 alert("success");
-                console.log(data[0].cid);
                 if (data.length > 0) {
                     $.each(data,function (i,item) {
                         $("<div></div>").appendTo('#post_all').addClass("Mid_"+item.mid)
@@ -124,16 +191,19 @@
 
     $("#sendBtn").click(function(){
         if (!flag) {
-            $sendBtn.hide();
+            // $sendBtn.hide();
             console.log("鼠标进入")
+            $sendBtn.addClass("disabled");
             $.each(btnAry,function(i,val){
                 setTimeout(function(){
                     val.show();
                 },i*100+50);
-
             });
+            setTimeout(function(){
+                $sendBtn.removeClass("disabled");
+            },1200);
             $sendBtn.text('关闭');
-            $sendBtn.show();
+            // $sendBtn.show();
             flag = true;
         }else{
             console.log("鼠标离开")

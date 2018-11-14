@@ -103,4 +103,20 @@ public class Message {
     public void setMdatetime(Date mdatetime) {
         this.mdatetime = mdatetime;
     }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "mid=" + mid +
+                ", uid=" + uid +
+                ", tid='" + tid + '\'' +
+                ", cid='" + cid + '\'' +
+                ", mcontent='" + mcontent + '\'' +
+                ", mhttp='" + mhttp + '\'' +
+                ", mfav=" + mfav +
+                ", mreply=" + mreply +
+                ", mcopy=" + mcopy +
+                ", mdatetime=" + mdatetime +
+                '}';
+    }
 }

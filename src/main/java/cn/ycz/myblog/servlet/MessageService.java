@@ -9,4 +9,5 @@ import java.util.List;
 public interface MessageService {
     Result craetMsg(Message message);
     List<Content> findAllByUid(Long uid);
+    Result deleteMsg(Long mid);
 }

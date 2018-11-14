@@ -14,9 +14,6 @@
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active">
-                        <a href="#">Link</a>
-                    </li>
                     <li>
                         <a href="#">Link</a>
                     </li>
@@ -52,7 +49,10 @@
                 </form>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="#">Link</a>
+                        <a href="#" th:text="${session.user.ualais}">Link</a>
+                        <a id="myUid" th:text="${session.user.uid}" style="display: none">Link</a>
+                    </li>
+                    <li style="display: none">
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<strong class="caret"></strong></a>
